@@ -2,41 +2,70 @@ const Case = required("../schemas/todoSchemas")
 
 
 
-exports.createNewCase = (req, res) => {
 
-    // const title = req.body.title
 
-    if(!subject) {
-        res.status(400).json({
-            message: "You need to add a subject"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Hitta med id och uppdatera
+Case.findByIdAndUpdate(req.params.id, { subject }, { new: true })
+.then(cases => {
+    if(!cases) {
+        res.status(404).json({
+            message: 'Could not find that subject'
         })
         return
     }
-
-    if(!email) {
-        res.status(400).json({
-            message: "You need to add an email"
-        })
-        return
-    }
-
-    if(!message) {
-        res.status(400).json({
-            message: " You need to add a message"
-        })
-        return
-    }
-    
-    Case.create({ subject, email, message })
-    .then((Case) => {
-        res.status(201).json(Case)
-    } )
-    .catch(err => {
-        res.status(500).json({
-            message: "Something went wrong when creating the case"
-        })
+res.status(200).json(cases)
+})
+.catch(err => {
+    res.status(500).json({
+        message: 'it didnt work updating the case',
+        err: err.message
     })
-    
-
-}
-
+})
