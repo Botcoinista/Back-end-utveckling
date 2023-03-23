@@ -14,6 +14,15 @@ exports.createNewCase = (req, res) => {
         return
     }
 
+// Hitta med id och uppdatera
+Case.findByIdAndUpdate(req.params.id, { subject }, { new: true })
+.then(cases => {
+    if(!cases) {
+        res.status(404).json({
+            message: 'Could not find that subject'
+        })
+        return
+    }
 
     if(!message) {
         res.status(400).json({
@@ -21,14 +30,6 @@ exports.createNewCase = (req, res) => {
         })
         return
     }
-
-    if(!email) {
-        res.status(400).json({
-            message: " You need to add an email"
-        })
-        return
-    }
-
 
     Case.create({ subject, email, message })
     .then((Case) => {
@@ -53,14 +54,3 @@ exports.getAllCases = (req, res) => {
 //
 
 
-
-// Hitta med id och uppdatera
-Case.findByIdAndUpdate(req.params.id, { subject }, { new: true })
-.then(cases => {
-    if(!cases) {
-        res.status(404).json({
-            message: 'Could not find that subject'
-        })
-        }
-        return
-    })
