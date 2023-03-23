@@ -1,0 +1,10 @@
+const mongoose = require('mongoose');
+
+const todoSchema = mongoose.Schema({
+    email: { type: String, required: true },
+    subject: { type: String, required: true },
+    messege: { type: String, required: true },
+    status: { type: Number, default: 1 }
+}, { timestamps: true })
+
+module.exports = mongoose.module('Todo', todoSchema)
