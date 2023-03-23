@@ -1,10 +1,11 @@
 const Case = required("../schemas/todoSchemas")
 
 
-
+//Create a new case
 exports.createNewCase = (req, res) => {
 
-    // const title = req.body.title
+    const { subject, email, message } = req.body
+ 
 
     if(!subject) {
         res.status(400).json({
@@ -26,7 +27,7 @@ exports.createNewCase = (req, res) => {
         })
         return
     }
-    
+
     Case.create({ subject, email, message })
     .then((Case) => {
         res.status(201).json(Case)
@@ -37,6 +38,16 @@ exports.createNewCase = (req, res) => {
         })
     })
     
-
 }
+
+
+exports.getAllCases = (req, res) => {
+    Case.find()
+    .then(Cases => {
+        res.status(200).json(Cases)
+    })
+} 
+
+//
+
 
