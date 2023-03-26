@@ -7,4 +7,4 @@ const todoSchema = mongoose.Schema({
     status: { type: Number, default: 1 }
 }, { timestamps: true })
 
-module.exports = mongoose.module('Todo', todoSchema)
+module.exports = mongoose.model('Todo', todoSchema)
