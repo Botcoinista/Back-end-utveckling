@@ -18,8 +18,8 @@ const dbConnecter = () => {
     .then(() => {
       console.log('Connected to db')
     })
-    .catch(() => { //byt lösenord-input i .env för att kontrollera om den kopplar upp mot db 
-      console.log('Could not connect to db')
+    .catch(err => { //byt lösenord-input i .env för att kontrollera om den kopplar upp mot db 
+      console.log('Could not connect to db ' + err)
     })
 }
 
