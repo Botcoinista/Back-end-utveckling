@@ -1,4 +1,4 @@
-const Case = required("../schemas/todoSchemas")
+const Case = require("../schemas/todoSchema")
 
 // exports.createNewCase = (req, res) => {
 
@@ -13,9 +13,9 @@ const Case = required("../schemas/todoSchemas")
 exports.createNewCase = (req, res) => {
 
     const { subject, email, message } = req.body
- 
 
-    if(!subject) {
+
+    if (!subject) {
         res.status(400).json({
             message: "You need to add a subject"
         })
@@ -23,14 +23,14 @@ exports.createNewCase = (req, res) => {
     }
 
 
-    if(!message) {
+    if (!message) {
         res.status(400).json({
             message: " You need to add a message"
         })
         return
     }
 
-    if(!email) {
+    if (!email) {
         res.status(400).json({
             message: " You need to add an email"
         })
@@ -39,15 +39,15 @@ exports.createNewCase = (req, res) => {
 
 
     Case.create({ subject, email, message })
-    .then((Case) => {
-        res.status(201).json(Case)
-    } )
-    .catch(err => {
-        res.status(500).json({
-            message: "Something went wrong when creating the case"
+        .then((Case) => {
+            res.status(201).json(Case)
         })
-    })
-    
+        .catch(err => {
+            res.status(500).json({
+                message: "Something went wrong when creating the case"
+            })
+        })
+
 }
 
 exports.getAllCases = (req, res) => {
