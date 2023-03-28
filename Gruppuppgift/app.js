@@ -5,6 +5,10 @@ const cors = require('cors') // dra ner cors, säkerhetsgrej från att tillåta 
 //Joakim sa att vi kan skriva en app.use(()....) men enklare att bara slänga dra ner cors
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/api/taskDBtodo', require('./controllers/todoController'))
 
 module.exports = app;
 

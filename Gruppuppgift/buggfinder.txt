@@ -1,0 +1,14 @@
+I todoModel rad 1 {
+  då modulen har 'Todo', bör Case heta Todo? - verkade inte påverka alls
+  Fel fil, ska vara todoSchema istället för todoSchemas - ändrade
+  Require istället för required - ändrade
+}
+
+I todoModel rad 5 {
+  vet inte om vi bör köra subject, email, message i ordning. - visade sig inte påverka alls
+}
+
+
+I todoModel rad 58 {
+  funktionen ligger öppen så vi kan ej exportera den - får nog baka ihop den
+}
