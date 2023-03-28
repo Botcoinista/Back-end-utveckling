@@ -1,4 +1,5 @@
 const Case = require("../schemas/todoSchema")
+const caseComment = require("../schemas/commentSchema")
 
 
 //Create a new case
@@ -39,7 +40,7 @@ exports.createNewCase = (req, res) => {
 
 }
 
-
+//Find all cases
 exports.getAllCases = (req, res) => {
     Case.find()
         .then(Cases => {
@@ -53,8 +54,7 @@ exports.getAllCases = (req, res) => {
         })
 }
 
-//
-
+// Find a case just by id without updating
 exports.getSingleCase = (req, res) => {
     Case.findById(req.params.id)
         .then(cases => res.status(200).json(cases))
@@ -65,7 +65,7 @@ exports.getSingleCase = (req, res) => {
 }
 
 
-
+// Find and update a case by ID
 exports.getSingleCaseAndUpdate = (req, res) => {
     Case.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .then(cases => {
@@ -84,6 +84,12 @@ exports.getSingleCaseAndUpdate = (req, res) => {
             })
         })
 }
+
+// exports.findAndCommentCase = (req, res) => {
+//     const { email, message } = req.body
+// }
+
+
 
 
 
