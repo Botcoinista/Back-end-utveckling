@@ -1,5 +1,13 @@
 const Case = required("../schemas/todoSchemas")
 
+// exports.createNewCase = (req, res) => {
+
+//     if(!email || !subject || !message){
+//         res.status(400).json({
+//             message: 'A case must contain an email, a subject and a message!'
+//         })
+//         return
+//     }
 
 //Create a new case
 exports.createNewCase = (req, res) => {
@@ -42,25 +50,36 @@ exports.createNewCase = (req, res) => {
     
 }
 
-
 exports.getAllCases = (req, res) => {
+
     Case.find()
     .then(Cases => {
         res.status(200).json(Cases)
     })
+    .catch(err => {
+        res.status(500).json({
+            message: 'Something went wrong when getting the case'
+        })
+    })
 } 
 
-//
-
-
-
 // Hitta med id och uppdatera
-Case.findByIdAndUpdate(req.params.id, { subject }, { new: true })
-.then(cases => {
-    if(!cases) {
-        res.status(404).json({
-            message: 'Could not find that subject'
-        })
-        }
+exports.getSingleCase = (req, res) => {
+
+    Case.findById(req.params.id)
+    .then(cases => {
+        if(!cases) {
+            res.status(404).json({
+                message: 'Could not find that case'
+            })
         return
+        }
+    res.status(200).json(cases)
     })
+    .catch(err => {
+        res.status(500).json({
+            message: "something went wrong when getting that case",
+            err: err.message
+        })
+    })
+}
