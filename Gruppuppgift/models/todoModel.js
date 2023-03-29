@@ -44,6 +44,7 @@ exports.createNewCase = (req, res) => {
 //Find all cases
 exports.getAllCases = (req, res) => {
     Case.find()
+        .populate('comments')
         .then(Cases => {
             res.status(200).json(Cases)
         })
@@ -58,6 +59,7 @@ exports.getAllCases = (req, res) => {
 // Find a case just by id without updating
 exports.getSingleCase = (req, res) => {
     Case.findById(req.params.id)
+        .populate('comments')
         .then(cases => res.status(200).json(cases))
         .catch(err => res.status(500).json({
             message: 'Something went wrong when getting task you wanted.',
@@ -92,6 +94,8 @@ exports.getSingleCaseAndUpdate = (req, res) => {
     updateObj['status.currentStatus'] = currentStatus;
 
     Case.findByIdAndUpdate(id, updateObj, { new: true })
+        .populate('status.id')
+        .populate('comments')
         .then(cases => {
             if (!cases) {
                 return res.status(404).json({
@@ -108,24 +112,4 @@ exports.getSingleCaseAndUpdate = (req, res) => {
         })
 }
 
-// Add a comment to a case
-exports.addCommentToCase = (req, res) => {
-    const comment = req.body;
-    const caseId = req.params.id;
-    Case.findById(caseId)
-        .then((commentCase) => {
-            if (!commentCase) {
-                res.status(404).send({ message: `Case with id ${caseId} not found` });
-            } else {
-                commentCase.comments.push(comment);
-                return commentCase.save();
-            }
-        })
-        .then(() => {
-            res.send({ message: "Comment added successfully" });
-        })
-        .catch((error) => {
-            console.log(error);
-            res.status(500).send({ message: "Error adding comment to case" });
-        });
-};
+

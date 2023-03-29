@@ -1,20 +1,18 @@
-//Importerar från todoModel
 const router = require('express').Router()
-const { createNewCase, getAllCases, getSingleCase, getSingleCaseAndUpdate, addCommentToCase } = require('../models/todoModel')
+//Importerar från todoModel
+const { createNewCase, getAllCases, getSingleCase, getSingleCaseAndUpdate } = require('../models/todoModel')
 
 // Lägger upp CRUD för att enklare hänvisa till de olika delarna
 
 // Create
-router.post('/', createNewCase)
+router.post('/', createNewCase) // släng upp ett
 
 // Read
 router.get('/', getAllCases)
-router.get('/:id', getSingleCase)
-
+router.get('/:id', getSingleCase) //read med ID
 
 // Update
-router.post('/:id', getSingleCaseAndUpdate)
-router.post('/:id/comment', addCommentToCase);
+router.put('/:id', getSingleCaseAndUpdate) // uppdatera status 1-3 --> Not done, On going och Done
 // Delete
 
 

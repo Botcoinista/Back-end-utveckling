@@ -8,7 +8,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/taskDBtodo', require('./controllers/todoController'))
+app.use('/api/case', require('./controllers/todoController')) // kör denna för att GET, POST PUT av tasks
+app.use('/api/comment', require('./controllers/commentController')) // kör denna för att kommentera mot tasks
 
 module.exports = app;
 
