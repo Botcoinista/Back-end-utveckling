@@ -1,5 +1,5 @@
 const Case = require("../schemas/todoSchema")
-const caseComment = require("../schemas/commentSchema")
+
 
 
 //Create a new case
@@ -40,6 +40,7 @@ exports.createNewCase = (req, res) => {
 
 }
 
+
 //Find all cases
 exports.getAllCases = (req, res) => {
     Case.find()
@@ -67,29 +68,64 @@ exports.getSingleCase = (req, res) => {
 
 // Find and update a case by ID
 exports.getSingleCaseAndUpdate = (req, res) => {
-    Case.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const id = req.params.id;
+    const { statusId } = req.body;
+
+    let updateObj = {};
+    let currentStatus = '';
+
+    if (statusId == "1") {
+        updateObj = { 'status.id': 1 };
+        currentStatus = 'Not done';
+    } else if (statusId == "2") {
+        updateObj = { 'status.id': 2 };
+        currentStatus = 'On going';
+    } else if (statusId == "3") {
+        updateObj = { 'status.id': 3 };
+        currentStatus = 'Done';
+    } else {
+        return res.status(400).json({
+            message: 'Invalid status ID'
+        });
+    }
+
+    updateObj['status.currentStatus'] = currentStatus;
+
+    Case.findByIdAndUpdate(id, updateObj, { new: true })
         .then(cases => {
             if (!cases) {
-                res.status(404).json({
+                return res.status(404).json({
                     message: 'Could not find that subject'
                 })
-                return
             }
-            res.status(200).json(cases)
+            return res.status(201).json(cases)
         })
         .catch(err => {
-            res.status(500).json({
+            return res.status(500).json({
                 message: 'Something went wrong when getting cases by ID',
                 err: err.message
             })
         })
 }
 
-// exports.findAndCommentCase = (req, res) => {
-//     const { email, message } = req.body
-// }
-
-
-
-
-
+// Add a comment to a case
+exports.addCommentToCase = (req, res) => {
+    const comment = req.body;
+    const caseId = req.params.id;
+    Case.findById(caseId)
+        .then((commentCase) => {
+            if (!commentCase) {
+                res.status(404).send({ message: `Case with id ${caseId} not found` });
+            } else {
+                commentCase.comments.push(comment);
+                return commentCase.save();
+            }
+        })
+        .then(() => {
+            res.send({ message: "Comment added successfully" });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).send({ message: "Error adding comment to case" });
+        });
+};
