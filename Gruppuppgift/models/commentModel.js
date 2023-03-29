@@ -1,5 +1,5 @@
-const Case = require("../schemas/todoSchema");
-const Comment = require("../schemas/commentSchema");
+const Case = require('../schemas/todoSchema');
+const Comment = require('../schemas/commentSchema');
 
 
 exports.addCommentToCase = async (req, res) => {
