@@ -1,18 +1,21 @@
 const mongoose = require('mongoose');
 
-const todoSchema = mongoose.Schema({
+const commentSchema = mongoose.Schema({
+    email: { type: String, required: true },
+    message: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+});
+
+const caseSchema = mongoose.Schema({
     email: { type: String, required: true },
     subject: { type: String, required: true },
     message: { type: String, required: true },
-    comment: [
-        {
-            email: { type: String, required: true },
-            message: { type: String, required: true },
-        }, { timestamps: true }
-    ],
-    status: { type: Number, default: 1 }
-}, { timestamps: true })
+    status: {
+        id: { type: Number, default: 1 },
+        currentStatus: { type: String, default: 'Not done' }
+    },
+    comments: [commentSchema],
+}, { timestamps: true });
 
+module.exports = mongoose.model('Case', caseSchema);
 
-
-module.exports = mongoose.model('Todo', todoSchema)
